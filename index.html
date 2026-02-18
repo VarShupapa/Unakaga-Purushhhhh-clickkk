@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Chandru ❤️</title>
+
+<style>
+body {
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  text-align:center;
+  background:#111;
+  color:white;
+  overflow:hidden;
+}
+
+.page {
+  display:none;
+  height:100vh;
+  width:100%;
+  position:absolute;
+}
+
+.active { display:block; }
+
+.bg {
+  position:absolute;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:blur(4px) brightness(0.6);
+  z-index:-1;
+}
+
+.card {
+  background:rgba(255,255,255,0.1);
+  padding:25px;
+  border-radius:20px;
+  backdrop-filter:blur(10px);
+  width:85%;
+  margin:auto;
+  margin-top:20%;
+}
+
+button {
+  padding:12px 20px;
+  border:none;
+  border-radius:25px;
+  margin:10px;
+  font-size:16px;
+  background:#ff4d6d;
+  color:white;
+  cursor:pointer;
+}
+
+input {
+  padding:12px;
+  border-radius:20px;
+  border:none;
+  width:80%;
+  text-align:center;
+  font-size:16px;
+}
+
+/* hearts */
+.heart {
+  position:absolute;
+  color:pink;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float {
+  from {transform:translateY(100vh);}
+  to {transform:translateY(-10vh);}
+}
+
+.heart-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+  margin-top:20px;
+}
+
+.heart-btn {
+  font-size:40px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="Mu💋.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<div class="page active" id="p1">
+<img src="photo1.jpg" class="bg">
+<div class="card">
+<h2>chandru en ammu kutty en papa💋💗 en Bujji</h2>
+<p>From the moment you came into my life… everything became softer and brighter ❤️</p>
+<button onclick="next(2)">Open Surprise ✨</button>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+<img src="photo2.jpg" class="bg">
+<div class="card">
+<h2>Where did we first meet?</h2>
+<p>Varshu🖤Chandru</p>
+<input id="answer" placeholder="Type your answer...">
+<br>
+<button onclick="checkAnswer()">Submit</button>
+<p id="msg"></p>
+</div>
+</div>
+
+<!-- PAGE 3 MEMORY GAME -->
+<div class="page" id="p3">
+<img src="photo3.jpg" class="bg">
+<div class="card">
+<h3>Find our special memory ❤️ (3 chances)</h3>
+<div class="heart-grid" id="hearts"></div>
+<p id="gameMsg"></p>
+</div>
+</div>
+
+<!-- PAGE 4 MESSAGE -->
+<div class="page" id="p4">
+<img src="photo4.jpg" class="bg">
+<div class="card">
+<h2>My Love 💞</h2>
+<p>
+Being with you feels like home.<br>
+Every smile of yours heals me.<br>
+No matter what happens in life,<br>
+I just want to walk beside you… always.
+</p>
+<button onclick="next(5)">Next ➜</button>
+</div>
+</div>
+
+<!-- PAGE 5 FINAL -->
+<div class="page" id="p5">
+<img src="photo5.jpg" class="bg">
+<div class="card">
+<h2>You said YES… ❤️</h2>
+<p>
+From this moment, it’s you and me forever.<br>
+Thank you for choosing us.<br>
+I promise to love you endlessly. 💋
+</p>
+<img src="photo6.jpg" style="width:200px;border-radius:15px;">
+</div>
+</div>
+
+<script>
+function next(n){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("p"+n).classList.add("active");
+}
+
+/* typing question */
+function checkAnswer(){
+  let a=document.getElementById("answer").value.toLowerCase();
+  if(a.includes("college")){
+    next(3);
+  }else{
+    document.getElementById("msg").innerText="Try again baby 💋";
+  }
+}
+
+/* memory game */
+let chances=3;
+let correct=Math.floor(Math.random()*6);
+let grid=document.getElementById("hearts");
+
+for(let i=0;i<6;i++){
+  let h=document.createElement("div");
+  h.innerHTML="💗";
+  h.className="heart-btn";
+  h.onclick=()=>pick(i);
+  grid.appendChild(h);
+}
+
+function pick(i){
+  if(i===correct){
+    next(4);
+  }else{
+    chances--;
+    if(chances>0){
+      document.getElementById("gameMsg").innerText=
+      chances===2 ?
+      "Babyyy, try one more💋" :
+      "Try one more papa, don’t worry papa loves you even if you fail🤌🏻💋";
+    }else{
+      document.getElementById("gameMsg").innerText="Last chance over 😘";
+    }
+  }
+}
+
+/* floating hearts */
+setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(20+Math.random()*20)+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},300);
+</script>
+
+</body>
+</html>
