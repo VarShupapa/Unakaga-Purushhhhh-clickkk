@@ -196,19 +196,49 @@ for(let i=0;i<6;i++){
 }
 
 function pick(i){
-  if(i===correct){
-    next(4);
-  }else{
-    chances--;
-    if(chances>0){
-      document.getElementById("gameMsg").innerText=
-      chances===2 ?
-      "Babyyy, try one more💋" :
-      "Try one more papa, don’t worry papa loves you even if you fail🤌🏻💋";
-    }else{
-      document.getElementById("gameMsg").innerText="Last chance over 😘";
+  const hearts = document.querySelectorAll(".heart-btn");
+  hearts[i].classList.add("open-heart");
+
+  setTimeout(() => {
+    if(i===correct){
+
+      // show photo under exploded heart
+      hearts[i].style.backgroundImage = "none";
+      hearts[i].innerHTML = `
+        <img src="photo6.jpg" 
+        style="width:90px;border-radius:12px;">
+      `;
+
+
+      // show proposal question
+      document.getElementById("gameMsg").innerHTML = `
+        <div style="margin-top:20px">
+          <h3>Will you be mine forever? 💍💘</h3>
+          <button onclick="next(4)">Yes 💗</button>
+          <button onclick="sayNo()">No 😜</button>
+        </div>
+      `;
+
+    } else {
+      chances--;
+
+      document.getElementById("gameMsg").innerText =
+        chances===2 ?
+        "Babyyy, try one more💋" :
+        "Try one more papa, don’t worry papa loves you even if you fail🤌🏻💋";
     }
-  }
+  }, 400);
+}
+function sayNo(){
+  const msgs = [
+    "Ayyoo baby 😭 try again 💋",
+    "No ah? Papa heart break aagidum 😜",
+    "Think again love 😘"
+  ];
+
+  document.getElementById("gameMsg").innerText =
+    msgs[Math.floor(Math.random()*msgs.length)];
+}
 }
 
 /* floating hearts */
@@ -226,3 +256,4 @@ setInterval(()=>{
 </body>
 
 </html>
+
