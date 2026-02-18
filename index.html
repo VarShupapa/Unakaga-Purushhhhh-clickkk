@@ -49,6 +49,7 @@ margin:10px;
 font-size:16px;
 background:#ff4d6d;
 color:white;
+cursor:pointer;
 }
 
 .heart-btn{
@@ -73,6 +74,7 @@ display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:20px;
 margin-top:20px;
+justify-items:center;
 }
 </style>
 </head>
@@ -88,7 +90,7 @@ margin-top:20px;
 <img src="photo1.jpg" class="bg">
 <div class="card">
 <h2>chandru en ammu kutty en papa💋💗 en Bujji</h2>
-<button onclick="start()">Open Surprise ✨</button>
+<button id="startBtn">Open Surprise ✨</button>
 </div>
 </div>
 
@@ -99,7 +101,7 @@ margin-top:20px;
 <h3>Where did we first meet?</h3>
 <input id="ans" placeholder="Type answer">
 <br>
-<button onclick="check()">Submit</button>
+<button id="submitBtn">Submit</button>
 <p id="msg"></p>
 </div>
 </div>
@@ -114,8 +116,19 @@ margin-top:20px;
 </div>
 </div>
 
-<!-- PAGE 4 -->
+<!-- PAGE 4 PROPOSAL -->
 <div class="page" id="p4">
+<img src="photo5.jpg" class="bg">
+<div class="card">
+<h2>Will you be mine forever? 💍💘</h2>
+<button id="yesBtn">Yes 💗</button>
+<button id="noBtn">No 😜</button>
+<p id="proposalMsg"></p>
+</div>
+</div>
+
+<!-- PAGE 5 FINAL -->
+<div class="page" id="p5">
 <img src="photo4.jpg" class="bg">
 <div class="card">
 <h2>I love you endlessly 💞</h2>
@@ -123,25 +136,33 @@ margin-top:20px;
 </div>
 </div>
 
-<script defer>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
 
-function start(){
-document.getElementById("music").play();
-next(2);
-}
+const music=document.getElementById("music");
 
 function next(n){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 document.getElementById("p"+n).classList.add("active");
 }
 
-function check(){
-let a=document.getElementById("ans").value.toLowerCase();
-if(a.includes("college")) next(3);
-else document.getElementById("msg").innerText="Try again baby 💋";
-}
+/* START BUTTON */
+document.getElementById("startBtn").onclick=function(){
+music.play().catch(()=>{});
+next(2);
+};
 
-/* game setup */
+/* QUESTION CHECK */
+document.getElementById("submitBtn").onclick=function(){
+let a=document.getElementById("ans").value.toLowerCase();
+if(a.includes("college")){
+next(3);
+}else{
+document.getElementById("msg").innerText="Try again baby 💋";
+}
+};
+
+/* GAME */
 let correct=Math.floor(Math.random()*6);
 let chances=3;
 let grid=document.getElementById("grid");
@@ -154,41 +175,57 @@ grid.appendChild(h);
 }
 
 function pick(i,el){
+if(el.classList.contains("open-heart")) return;
+
 el.classList.add("open-heart");
 
 setTimeout(()=>{
+
 if(i===correct){
 
 el.innerHTML=`<img src="photo6.jpg" style="width:90px;border-radius:12px;">`;
 
-document.getElementById("gameMsg").innerHTML=`
-<h3>Will you be mine forever? 💍💘</h3>
-<button onclick="next(4)">Yes 💗</button>
-<button onclick="sayNo()">No 😜</button>
-`;
+setTimeout(()=>{
+next(4);
+},800);
 
 }else{
+
 chances--;
+
+if(chances<=0){
 document.getElementById("gameMsg").innerText=
-chances===2?
-"Babyyy, try one more💋":
-"Try one more papa, don’t worry papa loves you even if you fail🤌🏻💋";
+"Ayyoo baby 😭 memory escape aagiduchu!";
+return;
 }
+
+document.getElementById("gameMsg").innerText=
+chances===2
+? "Babyyy, try one more💋"
+: "Try one more papa, don’t worry papa loves you even if you fail🤌🏻💋";
+
+}
+
 },400);
 }
 
-function sayNo(){
+/* PROPOSAL BUTTONS */
+
+document.getElementById("yesBtn").onclick=()=>next(5);
+
+document.getElementById("noBtn").onclick=function(){
 const msgs=[
 "Ayyoo baby 😭 try again 💋",
 "No ah? Papa heart break aagidum 😜",
 "Think again love 😘"
 ];
-document.getElementById("gameMsg").innerText=
-msgs[Math.floor(Math.random()*msgs.length)];
-}
 
+document.getElementById("proposalMsg").innerText=
+msgs[Math.floor(Math.random()*msgs.length)];
+};
+
+});
 </script>
 
 </body>
 </html>
-
